@@ -1,0 +1,1 @@
+export const MS_GRAPH_OPTIONS = 'MS_GRAPH_OPTIONS';

@@ -1,7 +1,7 @@
 import { Module, DynamicModule } from '@nestjs/common';
-import { AppConfigService } from './app-config.service';
-import { AppConfigOptions } from './app-config.interface';
-import { APP_CONFIG_OPTIONS } from './app-config.constants';
+import { AppConfigService } from './az-app-config.service';
+import { AppConfigOptions } from './az-app-config.interface';
+import { APP_CONFIG_OPTIONS } from './az-app-config.constants';
 
 @Module({})
 export class AppConfigModule {
