@@ -2,7 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { AppConfigOptions } from './az-app-config.interface';
 import { APP_CONFIG_OPTIONS } from './az-app-config.constants';
 import axios, { AxiosResponse } from 'axios';
-import { FeatureFlagValue } from '@azure/app-configuration';
+import { AppConfigurationClient, ConfigurationSetting, FeatureFlagValue, GetConfigurationSettingResponse, featureFlagPrefix, isFeatureFlag, parseFeatureFlag } from '@azure/app-configuration';
+import { ClientSecretCredential } from '@azure/identity';
 
 @Injectable()
 export class AppConfigService {
@@ -11,45 +12,27 @@ export class AppConfigService {
     private appConfigOptions: AppConfigOptions
   ) { }
 
-  async getToken(): Promise<string> {
-    try {
-      const { data }: AxiosResponse = await axios.post(
-        `https://login.microsoftonline.com/${this.appConfigOptions.tenantId}/oauth2/token`,
-        {
-          grant_type: 'client_credentials',
-          client_id: this.appConfigOptions.clientId,
-          client_secret: this.appConfigOptions.clientSecret,
-          resource: 'https://azconfig.io'
-        },
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+  async getFeatureFlags(keys: string[], label: string): Promise<{ key: string, enabled: boolean }[]> {
+    const credential: ClientSecretCredential = new ClientSecretCredential(this.appConfigOptions.tenantId, this.appConfigOptions.clientId, this.appConfigOptions.clientSecret);
+    const client: AppConfigurationClient = new AppConfigurationClient(this.appConfigOptions.url, credential);
+    const featureFlags: { key: string, enabled: boolean }[] = await Promise.all(
+      keys.map(async (key: string) => {
+        const configSetting: GetConfigurationSettingResponse = await client.getConfigurationSetting({
+          key: `${featureFlagPrefix}${key}`,
+          label: label
+        });
+
+        if (isFeatureFlag(configSetting)) {
+          const parsedFeatureFlag: ConfigurationSetting<FeatureFlagValue> = parseFeatureFlag(configSetting);
+
+          return {
+            key: parsedFeatureFlag.value.id,
+            enabled: parsedFeatureFlag.value.enabled
           }
         }
-      );
+      })
+    );
 
-      return data.access_token;
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async getFeatureFlags(token: string, key: string, label: string): Promise<FeatureFlagValue[]> {
-    try {
-      const token: string = await this.getToken();
-      const response: AxiosResponse = await axios.get(
-        `${this.appConfigOptions.url}/kv?key=.appconfig.featureflag/${key}&label=${label}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-      const featureFlags: FeatureFlagValue[] = response.data.items.map((item) => JSON.parse(item.value));
-
-      return featureFlags;
-    } catch (error) {
-      return error;
-    }
+    return featureFlags;
   }
 }
