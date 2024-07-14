@@ -11,8 +11,9 @@ export class AzureAdStrategy extends PassportStrategy(
 ) {
     constructor(@Inject(AUTH_OPTIONS) authOptions: AuthOptions) {
         super({
-            identityMetadata: `https://login.microsoftonline.com/${authOptions.tenantId}/v2.0/.well-known/openid-configuration`,
+            identityMetadata: `https://login.microsoftonline.com/${authOptions.tenantId}/.well-known/openid-configuration`,
             clientID: authOptions.clientId,
+            audience: `api://${authOptions.clientId}`,
             loggingLevel: 'info',
             loggingNoPII: false
         })
