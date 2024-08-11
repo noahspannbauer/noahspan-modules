@@ -3,6 +3,11 @@
 export * from './azAppConfig/az-app-config.module';
 export * from './azAppConfig/az-app-config.service';
 
+// Azure Data Tables
+
+export * from './azTable/az-table.module';
+export * from './azTable/az-table.service';
+
 // Auth
 
 export * from './auth/auth.module';
