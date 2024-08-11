@@ -4,16 +4,16 @@ import { TableOptions } from './az-table.interface';
 import { TABLE_OPTIONS } from './az-table.constants';
 
 @Module({})
-export class TablesModule {
+export class TableModule {
   static register(options: TableOptions): DynamicModule {
     return {
-      module: TablesModule,
+      module: TableModule,
       providers: [
         {
           provide: TABLE_OPTIONS,
           useValue: options
         },
-        TablesModule
+        TableModule
       ],
       exports: [TableService]
     }
