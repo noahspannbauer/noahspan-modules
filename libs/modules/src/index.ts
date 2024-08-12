@@ -7,6 +7,7 @@ export * from './azAppConfig/az-app-config.service';
 
 export * from './azTable/az-table.module';
 export * from './azTable/az-table.service';
+export { TableClient } from '@azure/data-tables';
 
 // Auth
 
