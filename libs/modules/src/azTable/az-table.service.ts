@@ -10,9 +10,9 @@ export class TableService {
     private tablesOptions: TableOptions
   ) {}
 
-  async getTableClient(): Promise<TableClient> {
+  async getTableClient(tableName: string): Promise<TableClient> {
     const credential: AzureNamedKeyCredential = new AzureNamedKeyCredential(this.tablesOptions.accountName, this.tablesOptions.accountKey);
-    const tableClient: TableClient = new TableClient(`https://${this.tablesOptions.accountName}`, this.tablesOptions.tableName, credential);
+    const tableClient: TableClient = new TableClient(`https://${this.tablesOptions.accountName}.table.core.windows.net`, tableName, credential);
 
     return tableClient;
   }
