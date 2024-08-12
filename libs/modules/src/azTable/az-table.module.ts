@@ -13,7 +13,7 @@ export class TableModule {
           provide: TABLE_OPTIONS,
           useValue: options
         },
-        TableModule
+        TableService
       ],
       exports: [TableService]
     }
