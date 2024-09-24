@@ -15,8 +15,11 @@ export class AuthGuard extends PassportAuthGuard('azure-ad') implements CanActiv
             'isPublic',
             context.getHandler()
         );
+        const req = context.switchToHttp().getRequest();
+        const authHeader = req.headers.authorization;
+        const token = authHeader && authHeader.split(' ')[1];
 
-        if (isPublic) {
+        if (isPublic && !token) {
             return true;
         }
 
