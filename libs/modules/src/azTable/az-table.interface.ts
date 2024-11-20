@@ -1,3 +1,6 @@
 export interface TableOptions {
-  connectionString;
+  accountName: string;
+  accountKey: string;
+  accountUrl: string;
+  allowInsecureConnection: boolean;
 }
