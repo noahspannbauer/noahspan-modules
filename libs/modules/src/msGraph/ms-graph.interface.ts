@@ -1,4 +1,4 @@
-export interface MsGraphOptions {
+export interface MsGraphModuleOptions {
     tenantId: string;
     clientId: string;
     clientSecret: string;

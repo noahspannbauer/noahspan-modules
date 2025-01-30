@@ -1,19 +1,20 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { BearerStrategy } from 'passport-azure-ad';
-import { AuthOptions } from './auth.interface'
-import { AUTH_OPTIONS } from "./auth.constants";
+import { AuthModuleOptions } from './auth.interface'
+import { MODULE_OPTIONS_TOKEN } from "./auth.module-definition";
 
 @Injectable()
 export class AzureAdStrategy extends PassportStrategy(
     BearerStrategy,
     'azure-ad'
 ) {
-    constructor(@Inject(AUTH_OPTIONS) authOptions: AuthOptions) {
+    constructor(@Inject(MODULE_OPTIONS_TOKEN) authModuleOptions: AuthModuleOptions) {
+        console.log(authModuleOptions)
         super({
-            identityMetadata: `https://login.microsoftonline.com/${authOptions.tenantId}/.well-known/openid-configuration`,
-            clientID: authOptions.clientId,
-            audience: `api://${authOptions.clientId}`,
+            identityMetadata: `https://login.microsoftonline.com/${authModuleOptions.tenantId}/.well-known/openid-configuration`,
+            clientID: authModuleOptions.clientId,
+            audience: `api://${authModuleOptions.clientId}`,
             loggingLevel: 'info',
             loggingNoPII: false
         })

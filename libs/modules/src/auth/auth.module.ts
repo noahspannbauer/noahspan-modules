@@ -1,26 +1,14 @@
-import { Module, DynamicModule } from '@nestjs/common';
-import { AuthOptions } from './auth.interface';
-import { AUTH_OPTIONS } from './auth.constants';
+import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { AzureAdStrategy } from './auth.strategy';
+import { ConfigurableModuleClass } from './auth.module-definition';
 
-@Module({})
-export class AuthModule {
-  static register(options: AuthOptions): DynamicModule {
-    return {
-      module: AuthModule,
-      imports: [
-        PassportModule.register({
-          defaultStrategy: 'azure-ad'
-        })
-      ],
-      providers: [
-        {
-          provide: AUTH_OPTIONS,
-          useValue: options
-        },
-        AzureAdStrategy
-      ]
-    };
-  }
-}
+@Module({
+  imports: [
+    PassportModule.register({
+      defaultStrategy: 'azure-ad'
+    })
+  ],
+  providers: [AzureAdStrategy]
+})
+export class AuthModule extends ConfigurableModuleClass {}
