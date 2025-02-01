@@ -1,8 +1,10 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
-import { BearerStrategy } from 'passport-azure-ad';
 import { AuthModuleOptions } from './auth.interface'
 import { MODULE_OPTIONS_TOKEN } from "./auth.module-definition";
+import { BearerStrategy } from 'passport-azure-ad'
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import * as jwksRsa from 'jwks-rsa';
 
 @Injectable()
 export class AzureAdStrategy extends PassportStrategy(
@@ -24,3 +26,26 @@ export class AzureAdStrategy extends PassportStrategy(
         return data;
     }
 }
+
+// @Injectable()
+// export class AzureAdStrategy extends PassportStrategy(Strategy, 'azure-ad') {
+//     constructor(@Inject(MODULE_OPTIONS_TOKEN) authModuleOptions: AuthModuleOptions) {
+//         super({
+//             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//             audience: `api://${authModuleOptions.clientId}`,
+//             issuer: `https://sts.windows.net/${authModuleOptions.tenantId}`,
+//             algorithms: ['RS256'],
+//             ignoreExpiration: true,
+//             secretOrKeyProvider: jwksRsa.passportJwtSecret({
+//                 cache: true,
+//                 rateLimit: true,
+//                 jwksRequestsPerMinute: 5,
+//                 jwksUri: `https://login.microsoftonline.com/${authModuleOptions.tenantId}`
+//             })
+//         })
+//     } 
+
+//     validate(payload: any) {
+//         return payload;
+//     }
+// }

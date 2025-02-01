@@ -1,6 +1,6 @@
 {
   "name": "@noahspan/noahspan-modules",
-  "version": "0.5.3",
+  "version": "0.6.2",
   "description": "",
   "author": "",
   "license": "UNLICENSED",
@@ -37,7 +37,9 @@
     "axios": "^1.7.2",
     "express-jwt": "^8.5.1",
     "jwks-rsa": "^3.1.0",
+    "passport": "^0.7.0",
     "passport-azure-ad": "^4.3.5",
+    "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
   },

@@ -3,6 +3,7 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard as PassportAuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
+import { IS_PUBLIC_KEY } from './public.decorator';
 
 @Injectable()
 export class AuthGuard extends PassportAuthGuard('azure-ad') implements CanActivate {
@@ -12,7 +13,7 @@ export class AuthGuard extends PassportAuthGuard('azure-ad') implements CanActiv
 
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         const isPublic = this.reflector.get<boolean>(
-            'isPublic',
+            IS_PUBLIC_KEY,
             context.getHandler()
         );
         const req = context.switchToHttp().getRequest();
