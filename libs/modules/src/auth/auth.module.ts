@@ -9,6 +9,8 @@ import { ConfigurableModuleClass } from './auth.module-definition';
       defaultStrategy: 'azure-ad'
     })
   ],
-  providers: [AzureAdStrategy]
+  providers: [
+    AzureAdStrategy
+  ]
 })
 export class AuthModule extends ConfigurableModuleClass {}
