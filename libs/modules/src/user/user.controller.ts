@@ -4,9 +4,11 @@ import {
   Headers,
   Query,
   StreamableFile,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Client as MsGraphClient } from '@microsoft/microsoft-graph-client';
+import { AuthGuard } from '../auth/auth.gaurd';
 
 @Controller('user')
 export class UserController {
@@ -15,6 +17,7 @@ export class UserController {
   ) {}
 
   @Get('photo')
+  @UseGuards(AuthGuard)
   async getProfilePhoto(@Headers() headers: any): Promise<StreamableFile> {
     try {
       const graphToken: string = await this.userService.getMsGraphAuth(
@@ -37,6 +40,7 @@ export class UserController {
   }
 
   @Get('profile')
+  @UseGuards(AuthGuard)
   async getUserProfile(@Headers() headers: any): Promise<any> {
     try {
       const graphToken: string = await this.userService.getMsGraphAuth(
@@ -54,6 +58,7 @@ export class UserController {
   }
 
   @Get('search')
+  @UseGuards(AuthGuard)
   async searchUsers(
     @Headers() headers: any,
     @Query('search') search: any
