@@ -3,7 +3,7 @@ import { AuthGuard as PassportAuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class AuthGuard extends PassportAuthGuard('azure-ad') {
+export class AuthGuard extends PassportAuthGuard('oidc') {
     constructor() {
         super();
     }

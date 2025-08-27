@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
-import { AzureAdStrategy } from './auth.strategy';
+import { OidcStrategy } from './oidc.strategy';
 import { ConfigurableModuleClass } from './auth.module-definition';
 
 @Module({
   imports: [
     PassportModule.register({
-      defaultStrategy: 'azure-ad'
+      defaultStrategy: 'oidc'
     })
   ],
   providers: [
-    AzureAdStrategy
+    OidcStrategy
   ]
 })
 export class AuthModule extends ConfigurableModuleClass {}

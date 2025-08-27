@@ -1,5 +1,10 @@
 export interface AuthModuleOptions {
-  tenantId: string;
+  authorizationUrl: string;
+  issuer: string;
+  callbackUrl: string;
   clientId: string;
   clientSecret: string;
+  scope: string;
+  tokenUrl: string;
+  userInfoUrl: string;
 }
