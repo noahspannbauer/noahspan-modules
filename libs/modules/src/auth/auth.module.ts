@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
-import { OidcStrategy } from './oidc.strategy';
+import { AuthStrategy } from './auth.strategy';
 import { ConfigurableModuleClass } from './auth.module-definition';
 
 @Module({
   imports: [
     PassportModule.register({
-      defaultStrategy: 'oidc'
+      defaultStrategy: 'jwt'
     })
   ],
   providers: [
-    OidcStrategy
+    AuthStrategy
   ]
 })
 export class AuthModule extends ConfigurableModuleClass {}

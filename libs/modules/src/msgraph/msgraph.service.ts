@@ -1,12 +1,12 @@
 import { Inject, Injectable, StreamableFile } from '@nestjs/common';
-import { UserModuleOptions } from './user.interface';
+import { MsGraphModuleOptions } from './msgraph.interface';
 import { Client } from '@microsoft/microsoft-graph-client';
 import { AuthenticationResult, ConfidentialClientApplication, OnBehalfOfRequest } from '@azure/msal-node';
-import { MODULE_OPTIONS_TOKEN } from './user.module-definition';
+import { MODULE_OPTIONS_TOKEN } from './msgraph.module-definition';
 
 @Injectable()
-export class UserService {
-    constructor(@Inject(MODULE_OPTIONS_TOKEN) private userModuleOptions: UserModuleOptions) {}
+export class MsGraphService {
+    constructor(@Inject(MODULE_OPTIONS_TOKEN) private msGraphModuleOptions: MsGraphModuleOptions) {}
 
     async getMsGraphAuth(accessToken: string, scopes: string[]): Promise<string> {
         try {
@@ -16,9 +16,9 @@ export class UserService {
             }
             const cca = new ConfidentialClientApplication({
                 auth: {
-                    clientId: this.userModuleOptions.clientId,
-                    clientSecret: this.userModuleOptions.clientSecret,
-                    authority: `https://login.microsoftonline.com/${this.userModuleOptions.tenantId}`
+                    clientId: this.msGraphModuleOptions.clientId,
+                    clientSecret: this.msGraphModuleOptions.clientSecret,
+                    authority: `https://login.microsoftonline.com/${this.msGraphModuleOptions.tenantId}`
                 }
             });
             const authenticationResult: AuthenticationResult = await cca.acquireTokenOnBehalfOf(oboRequest);
