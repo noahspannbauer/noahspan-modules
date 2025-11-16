@@ -8,6 +8,10 @@ export * from './auth/public.decorator';
 
 export * from './util/customError';
 
+// Decorators
+
+export { IS_PUBLIC_KEY, Public } from './decorators/public.decorator'
+
 // User
 
 export * from './user/user.module';
