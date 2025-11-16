@@ -1,8 +1,7 @@
 // Auth
 
 export * from './auth/auth.module';
-export * from './auth/auth.gaurd';
-export * from './auth/public.decorator';
+export * from './auth/auth.guard';
 
 // Custom Error
 
@@ -12,7 +11,9 @@ export * from './util/customError';
 
 export { IS_PUBLIC_KEY, Public } from './decorators/public.decorator'
 
-// User
+// MsGraph
 
-export * from './user/user.module';
-export * from './user/user.service';
+export * from './msgraph/msgraph.module';
+export * from './msgraph/msgraph.service';
+
+

@@ -1,11 +1,12 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { AuthGuard as PassportAuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 
 @Injectable()
-export class AuthGuard extends PassportAuthGuard('oidc') {
-    constructor() {
+export class AuthGuard extends PassportAuthGuard('jwt') {
+    constructor(private readonly reflector: Reflector) {
         super();
     }
 
