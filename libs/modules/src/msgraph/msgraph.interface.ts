@@ -1,5 +1,6 @@
 export interface MsGraphModuleOptions {
-  tenantId: string;
+  authority: string;
   clientId: string;
   clientSecret: string;
+  tenantId: string;
 }

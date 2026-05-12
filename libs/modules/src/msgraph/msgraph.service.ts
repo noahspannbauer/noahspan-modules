@@ -18,7 +18,7 @@ export class MsGraphService {
                 auth: {
                     clientId: this.msGraphModuleOptions.clientId,
                     clientSecret: this.msGraphModuleOptions.clientSecret,
-                    authority: `https://login.microsoftonline.com/${this.msGraphModuleOptions.tenantId}`
+                    authority: this.msGraphModuleOptions.authority
                 }
             });
             const authenticationResult: AuthenticationResult = await cca.acquireTokenOnBehalfOf(oboRequest);
@@ -67,7 +67,7 @@ export class MsGraphService {
 
     async searchUsers(accessToken, searchText: string): Promise<any> {
         try {
-            const graphToken: string = await this.getMsGraphAuth(accessToken, ['user.read']);
+            const graphToken: string = await this.getMsGraphAuth(accessToken, ['user.read.all']);
             const client: Client = await this.getMsGraphClientDelegated(graphToken);
             const results: any = await client
                 .api('users')
